@@ -1,6 +1,8 @@
 # Parking System Server
 
 ## Environment Variables
+The table below shows the environment variables needed by the server to run completely.
+
 | Env          | Type             | Purpose       |
 |-------------------|-------------------------|--------------|
 | PORT | number | Port number    |
