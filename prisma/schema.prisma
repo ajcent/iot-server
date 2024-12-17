@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model RFID {
+  id             String   @id @default(uuid())
+  uid            String   @unique
+  name           String
+  is_active      Boolean  @default(true)
+  date_created   DateTime @default(now())
+  date_modified  DateTime @updatedAt
+  amount         Int      @default(0)
+}
+
+model Reservation {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  slot        Int      @unique
+  is_occupied Boolean  @default(false)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model User {
+  id            String   @id @default(dbgenerated("(uuid())")) @db.Char(36)
+  username      String   @unique(map: "username") @db.VarChar(255)
+  password      String   @db.VarChar(255)
+}
