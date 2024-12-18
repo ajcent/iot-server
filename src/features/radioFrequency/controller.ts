@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import { sendSuccessResponse } from "@/helpers/responseBuilder";
 
 import RFIDService from "./services";
-import { editRfidSchema, postProductSchema } from "./validators";
+import { editRfidSchema, postProductSchema, uidSchema } from "./validators";
 
 export default class RFIDController {
   private service: RFIDService;
@@ -12,10 +12,20 @@ export default class RFIDController {
     this.service = service;
   }
 
-  getAllRFID = async (req: Request, res: Response, next: NextFunction) => {
+  getAllRFID = async (_: Request, res: Response, next: NextFunction) => {
     try {
       const rfidRecords = await this.service.getAllRFID();
       res.send(sendSuccessResponse({ data: rfidRecords }));
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  getRFIDById = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const currentUID = uidSchema.parse(req.params.id);
+      const rfidRecord = await this.service.getRFIDById(currentUID);
+      res.send(sendSuccessResponse({ data: rfidRecord }));
     } catch (error) {
       next(error);
     }

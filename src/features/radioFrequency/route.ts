@@ -1,5 +1,7 @@
 import express from "express";
 
+import { isAuthenticated } from "@/middlewares/isAuthenticated";
+
 import RFIDController from "./controller";
 import RFIDService from "./services";
 
@@ -8,12 +10,13 @@ const rfidController = new RFIDController(new RFIDService());
 
 router
   .route("/")
-  .get(rfidController.getAllRFID)
-  .post(rfidController.createRFID);
+  .get(isAuthenticated, rfidController.getAllRFID)
+  .post(isAuthenticated, rfidController.createRFID);
 
 router
   .route("/:id")
-  .put(rfidController.editRFID)
-  .delete(rfidController.deleteRFID);
+  .put(isAuthenticated, rfidController.editRFID)
+  .delete(isAuthenticated, rfidController.deleteRFID)
+  .get(rfidController.getRFIDById);
 
 export default router;

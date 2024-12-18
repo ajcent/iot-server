@@ -13,10 +13,20 @@ const responseBuilder_1 = require("@/helpers/responseBuilder");
 const validators_1 = require("./validators");
 class RFIDController {
     constructor(service) {
-        this.getAllRFID = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.getAllRFID = (_, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const rfidRecords = yield this.service.getAllRFID();
                 res.send((0, responseBuilder_1.sendSuccessResponse)({ data: rfidRecords }));
+            }
+            catch (error) {
+                next(error);
+            }
+        });
+        this.getRFIDById = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const currentUID = validators_1.uidSchema.parse(req.params.id);
+                const rfidRecord = yield this.service.getRFIDById(currentUID);
+                res.send((0, responseBuilder_1.sendSuccessResponse)({ data: rfidRecord }));
             }
             catch (error) {
                 next(error);
