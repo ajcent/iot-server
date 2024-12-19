@@ -10,13 +10,13 @@ const rfidController = new RFIDController(new RFIDService());
 
 router
   .route("/")
-  .get(isAuthenticated, rfidController.getAllRFID)
-  .post(isAuthenticated, rfidController.createRFID);
+  .get(rfidController.getAllRFID)
+  .post(rfidController.createRFID);
 
 router
   .route("/:id")
-  .put(isAuthenticated, rfidController.editRFID)
-  .delete(isAuthenticated, rfidController.deleteRFID)
+  .put(rfidController.editRFID)
+  .delete(rfidController.deleteRFID)
   .get(rfidController.getRFIDById);
 
 export default router;
