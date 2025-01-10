@@ -2,7 +2,12 @@ import prisma from "@/client/prisma";
 
 import { EditProduct, PostProduct } from "./types";
 
-const DEFAULT_RETURN_OBJECT = { uid: true, amount: true, name: true };
+const DEFAULT_RETURN_OBJECT = {
+  uid: true,
+  amount: true,
+  name: true,
+  plate_number: true,
+};
 
 export default class RFIDService {
   getRFIDById = async (uid: string) => {
@@ -25,18 +30,19 @@ export default class RFIDService {
     });
   };
 
-  editRFID = async (uid: string, payload: EditProduct) => {
+  editRFID = async (identifier: string, payload: EditProduct) => {
     return await prisma.rFID.update({
       data: payload,
-      where: { uid },
+      where: { plate_number: identifier },
       select: DEFAULT_RETURN_OBJECT,
     });
   };
 
-  deleteRFID = async (uid: string) => {
-    return await prisma.rFID.delete({
-      where: { uid },
-      select: DEFAULT_RETURN_OBJECT,
+  deleteRFID = async (identifier: string) => {
+    return await prisma.rFID.deleteMany({
+      where: {
+        OR: [{ uid: identifier }, { plate_number: identifier }],
+      },
     });
   };
 }

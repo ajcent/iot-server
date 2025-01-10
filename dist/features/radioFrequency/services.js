@@ -13,7 +13,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const prisma_1 = __importDefault(require("@/client/prisma"));
-const DEFAULT_RETURN_OBJECT = { uid: true, amount: true, name: true };
+const DEFAULT_RETURN_OBJECT = {
+    uid: true,
+    amount: true,
+    name: true,
+    plate_number: true,
+};
 class RFIDService {
     constructor() {
         this.getRFIDById = (uid) => __awaiter(this, void 0, void 0, function* () {
@@ -33,17 +38,18 @@ class RFIDService {
                 select: DEFAULT_RETURN_OBJECT,
             });
         });
-        this.editRFID = (uid, payload) => __awaiter(this, void 0, void 0, function* () {
+        this.editRFID = (identifier, payload) => __awaiter(this, void 0, void 0, function* () {
             return yield prisma_1.default.rFID.update({
                 data: payload,
-                where: { uid },
+                where: { plate_number: identifier },
                 select: DEFAULT_RETURN_OBJECT,
             });
         });
-        this.deleteRFID = (uid) => __awaiter(this, void 0, void 0, function* () {
-            return yield prisma_1.default.rFID.delete({
-                where: { uid },
-                select: DEFAULT_RETURN_OBJECT,
+        this.deleteRFID = (identifier) => __awaiter(this, void 0, void 0, function* () {
+            return yield prisma_1.default.rFID.deleteMany({
+                where: {
+                    OR: [{ uid: identifier }, { plate_number: identifier }],
+                },
             });
         });
     }

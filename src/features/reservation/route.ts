@@ -2,7 +2,6 @@ import express from "express";
 
 import ReservationController from "./controller";
 import ReservationService from "./services";
-import { isAuthenticated } from "@/middlewares/isAuthenticated";
 
 const router = express.Router();
 const reservationController = new ReservationController(
@@ -12,11 +11,11 @@ const reservationController = new ReservationController(
 router
   .route("/")
   .get(reservationController.getReservations)
-  .post(isAuthenticated, reservationController.postReservation);
+  .post(reservationController.postReservation);
 
 router
   .route("/:id")
-  .put(isAuthenticated, reservationController.editReservation)
-  .delete(isAuthenticated, reservationController.deleteReservation);
+  .put(reservationController.editReservation)
+  .delete(reservationController.deleteReservation);
 
 export default router;

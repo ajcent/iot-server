@@ -15,8 +15,9 @@ datasource db {
 
 model RFID {
   id             String   @id @default(uuid())
-  uid            String   @unique
+  uid            String?  @unique
   name           String
+  plate_number   String   @unique
   is_active      Boolean  @default(true)
   date_created   DateTime @default(now())
   date_modified  DateTime @updatedAt

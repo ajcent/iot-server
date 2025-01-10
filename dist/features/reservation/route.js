@@ -6,15 +6,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const controller_1 = __importDefault(require("./controller"));
 const services_1 = __importDefault(require("./services"));
-const isAuthenticated_1 = require("@/middlewares/isAuthenticated");
 const router = express_1.default.Router();
 const reservationController = new controller_1.default(new services_1.default());
 router
     .route("/")
     .get(reservationController.getReservations)
-    .post(isAuthenticated_1.isAuthenticated, reservationController.postReservation);
+    .post(reservationController.postReservation);
 router
     .route("/:id")
-    .put(isAuthenticated_1.isAuthenticated, reservationController.editReservation)
-    .delete(isAuthenticated_1.isAuthenticated, reservationController.deleteReservation);
+    .put(reservationController.editReservation)
+    .delete(reservationController.deleteReservation);
 exports.default = router;

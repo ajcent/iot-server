@@ -15,5 +15,6 @@ router
 router
     .route("/:id")
     .put(rfidController.editRFID)
-    .delete(rfidController.deleteRFID);
+    .delete(rfidController.deleteRFID)
+    .get(rfidController.getRFIDById);
 exports.default = router;
