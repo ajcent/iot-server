@@ -14,10 +14,6 @@ export const editRfidSchema = z.object({
     .min(3, { message: "Name must be at least 3 characters" })
     .optional(),
   amount: z.number().optional(),
-  plate_number: z
-    .string()
-    .min(4, { message: "Plate Number must be at least 4 characters" })
-    .optional(),
   uid: z
     .string()
     .min(4, { message: "UID must be at least 4 characters" })
