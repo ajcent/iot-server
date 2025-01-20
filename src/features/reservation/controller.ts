@@ -33,7 +33,7 @@ export default class ReservationController {
 
   editReservation = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const slotId = slotSchema.parse(req.params.id);
+      const slotId = slotSchema.parse(parseInt(req.params.id));
       const payload = editSlotSchema.parse(req.body);
       const modifiedReservation = await this.service.editReservation(
         slotId,

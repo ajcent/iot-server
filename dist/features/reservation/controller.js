@@ -34,7 +34,7 @@ class ReservationController {
         });
         this.editReservation = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const slotId = validators_1.slotSchema.parse(req.params.id);
+                const slotId = validators_1.slotSchema.parse(parseInt(req.params.id));
                 const payload = validators_1.editSlotSchema.parse(req.body);
                 const modifiedReservation = yield this.service.editReservation(slotId, payload);
                 res.send((0, responseBuilder_1.sendSuccessResponse)({ data: modifiedReservation }));

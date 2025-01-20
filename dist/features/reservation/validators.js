@@ -17,8 +17,8 @@ exports.editSlotSchema = zod_1.z.object({
         .number()
         .min(0, { message: "Slot number must be a non-zero value" })
         .optional(),
-    isOccupied: zod_1.z.boolean(),
+    is_occupied: zod_1.z.boolean(),
 });
 exports.slotSchema = zod_1.z
-    .number()
+    .number({ message: "Here" })
     .min(0, { message: "Slot number must be a non-zero value" });

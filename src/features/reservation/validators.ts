@@ -16,9 +16,9 @@ export const editSlotSchema = z.object({
     .number()
     .min(0, { message: "Slot number must be a non-zero value" })
     .optional(),
-  isOccupied: z.boolean(),
+  is_occupied: z.boolean(),
 });
 
 export const slotSchema = z
-  .number()
+  .number({ message: "Here" })
   .min(0, { message: "Slot number must be a non-zero value" });
